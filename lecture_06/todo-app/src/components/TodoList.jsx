@@ -17,6 +17,7 @@ import TodoTasks from './TodoTasks';
 const TodoList = () => {
   // glbalna vrednost
   const [todos, setTodos] = useState([]);
+  const [show, setShow] = useState(true);
 
   const addTodo = (value) => {
     const filteredTodos = todos.filter((todo) => todo.title !== value.title);
@@ -27,10 +28,19 @@ const TodoList = () => {
     setTodos(todos.map((todo) => (todo.id === todoId ? newValue : todo)));
   };
 
+  const handleToggleHideInput = () => {
+    setShow(!show);
+  };
+
   return (
     <div>
-      <ToDoForm handleAddTodo={addTodo} />
-      <TodoTasks todos={todos} updateTodo={updateTodo} />
+      {show && <ToDoForm handleAddTodo={addTodo} />}
+
+      <TodoTasks
+        handleToggleHideInput={handleToggleHideInput}
+        todos={todos}
+        updateTodo={updateTodo}
+      />
     </div>
   );
 };

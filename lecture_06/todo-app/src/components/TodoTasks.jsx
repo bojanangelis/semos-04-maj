@@ -2,7 +2,7 @@ import { CheckIcon, PencilIcon } from '@heroicons/react/24/solid';
 import React, { useState } from 'react';
 import ToDoForm from './ToDoForm';
 
-const TodoTasks = ({ todos, updateTodo }) => {
+const TodoTasks = ({ todos, updateTodo, handleToggleHideInput }) => {
   const [editInput, setEditInput] = useState({
     id: null,
     text: ''
@@ -12,6 +12,15 @@ const TodoTasks = ({ todos, updateTodo }) => {
 
   const submitUpdate = (value) => {
     updateTodo(editInput.id, value);
+    handleToggleHideInput();
+  };
+
+  const handleEditButton = (todo) => {
+    setEditInput({
+      id: todo.id,
+      text: todo.title
+    });
+    handleToggleHideInput();
   };
 
   return (
@@ -31,12 +40,7 @@ const TodoTasks = ({ todos, updateTodo }) => {
                 <CheckIcon className="h-6 w-6 text-white" />
               </button>
               <button
-                onClick={() => {
-                  setEditInput({
-                    id: todo.id,
-                    text: todo.title
-                  });
-                }}
+                onClick={() => handleEditButton(todo)}
                 className="bg-orange-400 p-1 rounded-md"
               >
                 <PencilIcon className="h-6 w-6 text-white" />
